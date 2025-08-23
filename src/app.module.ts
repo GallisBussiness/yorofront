@@ -1,7 +1,5 @@
 import {
   Module,
-  NestModule,
-  MiddlewareConsumer
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -20,10 +18,12 @@ import { InventoryModule } from './inventory/inventory.module';
 import { PaiementClientModule } from './paiement-client/paiement-client.module';
 import { PaiementFournisseurModule } from './paiement-fournisseur/paiement-fournisseur.module';
 import { DepotModule } from './depot/depot.module';
-import { AuthMiddleware } from 'lib/auth-middleware';
 import { DetteModule } from './dette/dette.module';
 import { PaymentModule } from './payment/payment.module';
 import { DetteFournisseurModule } from './dette_fournisseur/dette_fournisseur.module';
+import { AuthModule, AuthGuard } from '@thallesp/nestjs-better-auth';
+import { auth } from 'lib/auth';
+import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -37,6 +37,7 @@ import { DetteFournisseurModule } from './dette_fournisseur/dette_fournisseur.mo
       inject: [ConfigService],
       
     }),
+    AuthModule.forRoot(auth),
     ParamModule,
     ClientModule,
     FournisseurModule,
@@ -57,14 +58,11 @@ import { DetteFournisseurModule } from './dette_fournisseur/dette_fournisseur.mo
     DetteFournisseurModule
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware)
-      .exclude('/api/auth/*')
-      .exclude('/payment/ipn')
-      .forRoutes('*');
-  }
-}
+export class AppModule {}

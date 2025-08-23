@@ -2,10 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
-import { Request } from 'express';
+import { Session, UserSession,Public} from '@thallesp/nestjs-better-auth';
 import { createHash } from 'crypto';
 import { ConfigService } from '@nestjs/config';
-
 
 function SHA256Encrypt(password) {
   let sha256 = createHash('sha256');
@@ -16,15 +15,14 @@ function SHA256Encrypt(password) {
 @Controller('payment')
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService,
-    private readonly config: ConfigService
-
+    private readonly config: ConfigService,
   ) {}
 
   @Post()
-  async create(@Body() createPaymentDto: CreatePaymentDto, @Req() req: Request) {
+  async create(@Body() createPaymentDto: CreatePaymentDto,@Session() session: UserSession) {
     // Si l'utilisateur n'est pas spécifié, utiliser l'utilisateur connecté
-    if (!createPaymentDto.user && req.user) {
-      createPaymentDto.user = req.user['userId'];
+    if (!createPaymentDto.user && session.user) {
+      createPaymentDto.user = session.user.id;
     }
     const payment = await this.paymentService.create({...createPaymentDto,statut:'en_attente'});
     let paymentRequestUrl = "https://paytech.sn/api/payment/request-payment";// http client
@@ -64,6 +62,7 @@ export class PaymentController {
   }
 
   @Post('ipn')
+  @Public()
   async ipn(@Body() ipnDto: any) {
     let type_event = ipnDto.type_event;
     let ref_command = ipnDto.ref_command;
@@ -102,14 +101,9 @@ export class PaymentController {
     return this.paymentService.findByUser(userId);
   }
   
-  @Get('subscription/active/:userId')
-  getActiveSubscription(@Param('userId') userId: string) {
-    return this.paymentService.getActiveSubscription(userId);
-  }
-  
-  @Get('subscription/verify/:userId')
-  verifySubscription(@Param('userId') userId: string) {
-    return this.paymentService.verifySubscription(userId);
+  @Get('subscription/active')
+  verifySubscription(@Session() session: UserSession) {
+    return this.paymentService.verifySubscription(session.user.id);
   }
 
   @Patch(':id')

@@ -1,9 +1,8 @@
 import { betterAuth } from 'better-auth';
 import { MongoClient } from 'mongodb';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
-import { bearer } from 'better-auth/plugins';
 import 'dotenv/config';
-import { sendResetPasswordMail, sendVerifyEmailMail } from './resend-mail';
+import { sendResetPasswordMail } from './resend-mail';
 // Check if MongoDB URL is defined, otherwise use a default local MongoDB URL
 if (!process.env.MONGODB_URL) {
   console.warn(
@@ -35,5 +34,5 @@ export const auth = betterAuth({
       await sendResetPasswordMail({ user, url });
     },
   },
-  plugins: [bearer()],
+  plugins: [],
 });

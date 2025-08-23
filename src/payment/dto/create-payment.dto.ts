@@ -5,8 +5,9 @@ export class CreatePaymentDto {
     @IsMongoId()
     pack: string;
     
+    @IsOptional()
     @IsMongoId()
-    user: string;
+    user?: string;
     
     @IsOptional()
     @IsNumber()

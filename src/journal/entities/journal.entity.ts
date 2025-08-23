@@ -10,9 +10,6 @@ _id:string;
 @Prop({type:Date,required:true})
 date:Date;
 
-@Prop({type:Object,required:true})
-user:object;
-
 @Prop({type:String,required:true})
 method:string;
 
