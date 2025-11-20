@@ -10,16 +10,14 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 const logger = new Logger('Main');
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule,{
-    bodyParser:false
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // Configuration CORS pour Better Auth
+  // Configuration CORS pour Better Auth - DOIT être avant tout autre middleware
   app.enableCors({
     origin: process.env.APP_URL || 'http://localhost:3000',
     credentials: true, // CRUCIAL pour les cookies Better Auth
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'X-Requested-With'],
     exposedHeaders: ['Set-Cookie'],
   });
   const uploadsPath = join(process.cwd(), 'uploads');

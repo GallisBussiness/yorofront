@@ -22,11 +22,12 @@ if (!process.env.APP_URL) {
 }
 
 const appUrl = process.env.APP_URL;
+const apiUrl = process.env.API_URL || 'http://localhost:3001';
 
 export const auth = betterAuth({
   database: mongodbAdapter(db),
   trustedOrigins: [appUrl as string],
-  baseURL: appUrl as string,
+  baseURL: apiUrl, // URL du backend, pas du frontend
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }, request) => {
@@ -48,5 +49,12 @@ export const auth = betterAuth({
       enabled: false,
     },
     useSecureCookies: process.env.NODE_ENV === 'production',
+    // Configuration explicite des cookies
+    defaultCookieAttributes: {
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      path: '/',
+    },
   },
 });
