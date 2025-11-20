@@ -28,11 +28,11 @@ export const auth = betterAuth({
   trustedOrigins: [appUrl as string],
   emailAndPassword: {
     enabled: true,
-    autoSignIn: true,
-    requireEmailVerification: false,
     sendResetPassword: async ({ user, url, token }, request) => {
       await sendResetPasswordMail({ user, url });
     },
   },
-  plugins: [],
+  session:{
+    storeSessionInDatabase:true,
+  }
 });
