@@ -26,13 +26,27 @@ const appUrl = process.env.APP_URL;
 export const auth = betterAuth({
   database: mongodbAdapter(db),
   trustedOrigins: [appUrl as string],
+  baseURL: appUrl as string,
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }, request) => {
       await sendResetPasswordMail({ user, url });
     },
   },
-  session:{
-    storeSessionInDatabase:true,
-  }
+  session: {
+    storeSessionInDatabase: true,
+    expiresIn: 60 * 60 * 24 * 7, // 7 jours
+    updateAge: 60 * 60 * 24, // Mise à jour toutes les 24h
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // 5 minutes de cache
+    },
+  },
+  advanced: {
+    cookiePrefix: 'better-auth',
+    crossSubDomainCookies: {
+      enabled: false,
+    },
+    useSecureCookies: process.env.NODE_ENV === 'production',
+  },
 });

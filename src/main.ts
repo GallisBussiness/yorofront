@@ -13,6 +13,15 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule,{
     bodyParser:false
   });
+
+  // Configuration CORS pour Better Auth
+  app.enableCors({
+    origin: process.env.APP_URL || 'http://localhost:3000',
+    credentials: true, // CRUCIAL pour les cookies Better Auth
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+    exposedHeaders: ['Set-Cookie'],
+  });
   const uploadsPath = join(process.cwd(), 'uploads');
   app.useStaticAssets(uploadsPath, {
     prefix: '/uploads/',
@@ -21,7 +30,11 @@ async function bootstrap() {
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization,Credentials");
     }
   });
-  app.use(helmet());
+  
+  // Configuration Helmet pour permettre les cookies
+  app.use(helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  }));
 
   app.useGlobalPipes(
     new ValidationPipe({
