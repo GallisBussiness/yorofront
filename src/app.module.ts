@@ -38,7 +38,7 @@ import { VentecaisseModule } from './ventecaisse/ventecaisse.module';
       inject: [ConfigService],
       
     }),
-    AuthModule.forRoot(auth),
+    AuthModule.forRoot({auth,isGlobal:true}),
     ParamModule,
     ClientModule,
     FournisseurModule,
