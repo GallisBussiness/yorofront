@@ -25,6 +25,7 @@ import { AuthModule, AuthGuard } from '@thallesp/nestjs-better-auth';
 import { auth } from 'lib/auth';
 import { APP_GUARD } from '@nestjs/core';
 import { VentecaisseModule } from './ventecaisse/ventecaisse.module';
+import { PaiementDetteFournisseurModule } from './paiement-dette-fournisseur/paiement-dette-fournisseur.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -57,7 +58,8 @@ import { VentecaisseModule } from './ventecaisse/ventecaisse.module';
     DetteModule,
     PaymentModule,
     DetteFournisseurModule,
-    VentecaisseModule
+    VentecaisseModule,
+    PaiementDetteFournisseurModule
   ],
   controllers: [],
   providers: [
