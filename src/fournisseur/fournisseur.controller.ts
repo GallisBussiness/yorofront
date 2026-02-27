@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FournisseurService } from './fournisseur.service';
 import { CreateFournisseurDto } from './dto/create-fournisseur.dto';
 import { UpdateFournisseurDto } from './dto/update-fournisseur.dto';
@@ -28,7 +36,10 @@ export class FournisseurController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFournisseurDto: UpdateFournisseurDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateFournisseurDto: UpdateFournisseurDto,
+  ) {
     return this.fournisseurService.update(id, updateFournisseurDto);
   }
 

@@ -1,32 +1,38 @@
-import { IsArray, IsMongoId, IsNumber, IsOptional, IsString } from "class-validator";
+import {
+  IsArray,
+  IsMongoId,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateAchatDto {
-    @IsOptional()
-    @IsString()
-    ref:string;
-        
-    @IsString()
-    date:string;
+  @IsOptional()
+  @IsString()
+  ref: string;
 
-    @IsArray()
-    produits: object[];
+  @IsString()
+  date: string;
 
-    @IsNumber()
-    montant:number;
+  @IsArray()
+  produits: object[];
 
-    @IsNumber()
-    remise:number;
+  @IsNumber()
+  montant: number;
 
-    @IsNumber()
-    net_a_payer:number;
-    
-    @IsOptional()
-    @IsMongoId()
-    depot?: string;
+  @IsNumber()
+  remise: number;
 
-    @IsMongoId()
-    fournisseur:string;
+  @IsNumber()
+  net_a_payer: number;
 
-    @IsMongoId()
-    userId:string;
+  @IsOptional()
+  @IsMongoId()
+  depot?: string;
+
+  @IsMongoId()
+  fournisseur: string;
+
+  @IsMongoId()
+  userId: string;
 }

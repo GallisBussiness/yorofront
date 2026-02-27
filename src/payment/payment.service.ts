@@ -9,10 +9,15 @@ import { AbstractModel } from 'src/utils/abstractmodel';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
-export class PaymentService extends AbstractModel<Payment, CreatePaymentDto, UpdatePaymentDto> {
+export class PaymentService extends AbstractModel<
+  Payment,
+  CreatePaymentDto,
+  UpdatePaymentDto
+> {
   constructor(
-    @InjectModel(Payment.name) private readonly paymentModel: Model<PaymentDocument>,
-    @InjectModel(Pack.name) private readonly packModel: Model<PackDocument>
+    @InjectModel(Payment.name)
+    private readonly paymentModel: Model<PaymentDocument>,
+    @InjectModel(Pack.name) private readonly packModel: Model<PackDocument>,
   ) {
     super(paymentModel);
   }
@@ -21,18 +26,20 @@ export class PaymentService extends AbstractModel<Payment, CreatePaymentDto, Upd
     try {
       const pack = await this.packModel.findById(createPaymentDto.pack);
       if (!pack) {
-        throw new NotFoundException(`Pack with ID ${createPaymentDto.pack} not found`);
+        throw new NotFoundException(
+          `Pack with ID ${createPaymentDto.pack} not found`,
+        );
       }
 
       // Générer une référence unique pour le paiement
       const ref = uuidv4();
-      
+
       // Calculer la date de fin en fonction du type d'abonnement
       const startDate = new Date();
       const endDate = new Date();
-      
+
       // Calculate months to add based on subscription type
-      let monthsToAdd = pack.duree_mois; 
+      let monthsToAdd = pack.duree_mois;
       endDate.setMonth(endDate.getMonth() + monthsToAdd);
       let type_abonnement = '';
       // Ajouter la durée en fonction du type d'abonnement
@@ -67,15 +74,26 @@ export class PaymentService extends AbstractModel<Payment, CreatePaymentDto, Upd
   }
 
   async findAll() {
-    return await this.paymentModel.find().populate('pack').populate('user').exec();
+    return await this.paymentModel
+      .find()
+      .populate('pack')
+      .populate('user')
+      .exec();
   }
 
   async findAllByUserId(userId: string) {
-    return await this.paymentModel.find({ user: userId }).populate('pack').exec();
+    return await this.paymentModel
+      .find({ user: userId })
+      .populate('pack')
+      .exec();
   }
 
   async findOne(id: string) {
-    const payment = await this.paymentModel.findById(id).populate('pack').populate('user').exec();
+    const payment = await this.paymentModel
+      .findById(id)
+      .populate('pack')
+      .populate('user')
+      .exec();
     if (!payment) {
       throw new NotFoundException(`Payment with ID ${id} not found`);
     }
@@ -87,11 +105,18 @@ export class PaymentService extends AbstractModel<Payment, CreatePaymentDto, Upd
   }
 
   async findByUserAndPack(userId: string, packId: string) {
-    return await this.paymentModel.find({ user: userId, pack: packId }).populate('pack').exec();
+    return await this.paymentModel
+      .find({ user: userId, pack: packId })
+      .populate('pack')
+      .exec();
   }
 
   async update(id: string, updatePaymentDto: UpdatePaymentDto) {
-    const payment = await this.paymentModel.findByIdAndUpdate(id, updatePaymentDto, { new: true });
+    const payment = await this.paymentModel.findByIdAndUpdate(
+      id,
+      updatePaymentDto,
+      { new: true },
+    );
     if (!payment) {
       throw new NotFoundException(`Payment with ID ${id} not found`);
     }
@@ -105,27 +130,31 @@ export class PaymentService extends AbstractModel<Payment, CreatePaymentDto, Upd
     }
     return payment;
   }
-  
+
   async getActiveSubscription(userId: string) {
     const now = new Date();
-    return await this.paymentModel.findOne({
-      user: userId,
-      date_debut: { $lte: now },
-      date_fin: { $gte: now },
-      statut: 'valide'
-    }).populate('pack').exec();
+    return await this.paymentModel
+      .findOne({
+        user: userId,
+        date_debut: { $lte: now },
+        date_fin: { $gte: now },
+        statut: 'valide',
+      })
+      .populate('pack')
+      .exec();
   }
-  
+
   async verifySubscription(userId: string) {
     const activeSubscription = await this.getActiveSubscription(userId);
     return {
       hasActiveSubscription: !!activeSubscription,
-      subscription: activeSubscription
+      subscription: activeSubscription,
     };
   }
 
   async getUserHistory(userId: string) {
-    return await this.paymentModel.find({ user: userId })
+    return await this.paymentModel
+      .find({ user: userId })
       .sort({ createdAt: -1 })
       .populate('pack')
       .exec();

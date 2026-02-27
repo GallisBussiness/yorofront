@@ -1,12 +1,12 @@
-import { IsMongoId, IsNumber, IsString } from "class-validator";
+import { IsMongoId, IsNumber, IsString } from 'class-validator';
 
 export class CreateDetteFournisseurDto {
-    @IsNumber()
-    montant:number;
+  @IsNumber()
+  montant: number;
 
-    @IsString()
-    date:string;
+  @IsString()
+  date: string;
 
-    @IsMongoId()
-    fournisseur:string;
+  @IsMongoId()
+  fournisseur: string;
 }

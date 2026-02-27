@@ -7,8 +7,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class PackService extends AbstractModel<Pack,CreatePackDto,UpdatePackDto>{
-  constructor(@InjectModel(Pack.name) private readonly packModel: Model<PackDocument>){
+export class PackService extends AbstractModel<
+  Pack,
+  CreatePackDto,
+  UpdatePackDto
+> {
+  constructor(
+    @InjectModel(Pack.name) private readonly packModel: Model<PackDocument>,
+  ) {
     super(packModel);
   }
 }

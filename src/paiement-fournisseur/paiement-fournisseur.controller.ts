@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PaiementFournisseurService } from './paiement-fournisseur.service';
 import { CreatePaiementFournisseurDto } from './dto/create-paiement-fournisseur.dto';
 import { UpdatePaiementFournisseurDto } from './dto/update-paiement-fournisseur.dto';
 
 @Controller('paiement-fournisseur')
 export class PaiementFournisseurController {
-  constructor(private readonly paiementFournisseurService: PaiementFournisseurService) {}
+  constructor(
+    private readonly paiementFournisseurService: PaiementFournisseurService,
+  ) {}
 
   @Post()
   create(@Body() createPaiementFournisseurDto: CreatePaiementFournisseurDto) {
@@ -33,8 +43,14 @@ export class PaiementFournisseurController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePaiementFournisseurDto: UpdatePaiementFournisseurDto) {
-    return this.paiementFournisseurService.update(id, updatePaiementFournisseurDto);
+  update(
+    @Param('id') id: string,
+    @Body() updatePaiementFournisseurDto: UpdatePaiementFournisseurDto,
+  ) {
+    return this.paiementFournisseurService.update(
+      id,
+      updatePaiementFournisseurDto,
+    );
   }
 
   @Delete(':id')

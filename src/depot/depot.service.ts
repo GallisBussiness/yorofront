@@ -25,7 +25,9 @@ export class DepotService {
   }
 
   async update(id: string, updateDepotDto: UpdateDepotDto): Promise<Depot> {
-    return this.depotModel.findByIdAndUpdate(id, updateDepotDto, { new: true }).exec();
+    return this.depotModel
+      .findByIdAndUpdate(id, updateDepotDto, { new: true })
+      .exec();
   }
 
   async remove(id: string): Promise<Depot> {

@@ -7,24 +7,30 @@ import { Param, ParamDocument } from './entities/param.entity';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class ParamService extends AbstractModel<Param,CreateParamDto,UpdateParamDto>{
-constructor(@InjectModel(Param.name) private readonly paramModel: Model<ParamDocument>){
-  super(paramModel);
-}
-
-async findOne(): Promise<Param> {
-  try {
-    return await this.paramModel.findOne();
-  } catch (error) {
-    throw new HttpException(error.message,500);
+export class ParamService extends AbstractModel<
+  Param,
+  CreateParamDto,
+  UpdateParamDto
+> {
+  constructor(
+    @InjectModel(Param.name) private readonly paramModel: Model<ParamDocument>,
+  ) {
+    super(paramModel);
   }
-}
 
-async findByUser(userId: string): Promise<Param> {
-  try {
-    return await this.paramModel.findOne({ userId });
-  } catch (error) {
-    throw new HttpException(error.message,500);
+  async findOne(): Promise<Param> {
+    try {
+      return await this.paramModel.findOne();
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
   }
-}
+
+  async findByUser(userId: string): Promise<Param> {
+    try {
+      return await this.paramModel.findOne({ userId });
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
 }

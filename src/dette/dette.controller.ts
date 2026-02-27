@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DetteService } from './dette.service';
 import { CreateDetteDto } from './dto/create-dette.dto';
 import { UpdateDetteDto } from './dto/update-dette.dto';
@@ -17,7 +25,6 @@ export class DetteController {
     return this.detteService.findAll();
   }
 
-  
   @Get('by/:id')
   findByClient(@Param('id') id: string) {
     return this.detteService.findBy(id);

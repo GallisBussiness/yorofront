@@ -1,15 +1,15 @@
-import { IsMongoId, IsPhoneNumber, IsString } from "class-validator";
+import { IsMongoId, IsPhoneNumber, IsString } from 'class-validator';
 
 export class CreateFournisseurDto {
-    @IsString()
-    nom: string;
+  @IsString()
+  nom: string;
 
-    @IsPhoneNumber("SN")
-    tel: string;
+  @IsPhoneNumber('SN')
+  tel: string;
 
-    @IsString()
-    addr: string;
-    
-    @IsMongoId()
-    userId: string;
+  @IsString()
+  addr: string;
+
+  @IsMongoId()
+  userId: string;
 }

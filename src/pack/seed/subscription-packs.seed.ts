@@ -32,7 +32,8 @@ export class SubscriptionPacksSeedService {
         nb_jours: 90,
         prix: 25000,
         duree_mois: 3,
-        description: 'Accès complet à la plateforme pendant 3 mois (économisez 16%)',
+        description:
+          'Accès complet à la plateforme pendant 3 mois (économisez 16%)',
         actif: true,
       },
       {
@@ -40,13 +41,14 @@ export class SubscriptionPacksSeedService {
         nb_jours: 180,
         prix: 45000,
         duree_mois: 6,
-        description: 'Accès complet à la plateforme pendant 6 mois (économisez 25%)',
+        description:
+          'Accès complet à la plateforme pendant 6 mois (économisez 25%)',
         actif: true,
       },
     ];
 
     // Insérer les packs dans la base de données
     await this.packModel.insertMany(subscriptionPacks);
-    console.log('Packs d\'abonnement initialisés avec succès');
+    console.log("Packs d'abonnement initialisés avec succès");
   }
 }

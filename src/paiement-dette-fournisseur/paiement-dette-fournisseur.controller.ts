@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PaiementDetteFournisseurService } from './paiement-dette-fournisseur.service';
 import { CreatePaiementDetteFournisseurDto } from './dto/create-paiement-dette-fournisseur.dto';
 import { UpdatePaiementDetteFournisseurDto } from './dto/update-paiement-dette-fournisseur.dto';
 
 @Controller('paiement-dette-fournisseur')
 export class PaiementDetteFournisseurController {
-  constructor(private readonly paiementDetteFournisseurService: PaiementDetteFournisseurService) {}
+  constructor(
+    private readonly paiementDetteFournisseurService: PaiementDetteFournisseurService,
+  ) {}
 
   @Post()
-  create(@Body() createPaiementDetteFournisseurDto: CreatePaiementDetteFournisseurDto) {
-    return this.paiementDetteFournisseurService.create(createPaiementDetteFournisseurDto);
+  create(
+    @Body()
+    createPaiementDetteFournisseurDto: CreatePaiementDetteFournisseurDto,
+  ) {
+    return this.paiementDetteFournisseurService.create(
+      createPaiementDetteFournisseurDto,
+    );
   }
 
   @Get('user/:userId')
@@ -28,8 +43,15 @@ export class PaiementDetteFournisseurController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePaiementDetteFournisseurDto: UpdatePaiementDetteFournisseurDto) {
-    return this.paiementDetteFournisseurService.update(id, updatePaiementDetteFournisseurDto);
+  update(
+    @Param('id') id: string,
+    @Body()
+    updatePaiementDetteFournisseurDto: UpdatePaiementDetteFournisseurDto,
+  ) {
+    return this.paiementDetteFournisseurService.update(
+      id,
+      updatePaiementDetteFournisseurDto,
+    );
   }
 
   @Delete(':id')

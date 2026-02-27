@@ -11,7 +11,9 @@ describe('PaiementFournisseurController', () => {
       providers: [PaiementFournisseurService],
     }).compile();
 
-    controller = module.get<PaiementFournisseurController>(PaiementFournisseurController);
+    controller = module.get<PaiementFournisseurController>(
+      PaiementFournisseurController,
+    );
   });
 
   it('should be defined', () => {

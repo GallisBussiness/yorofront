@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AchatService } from './achat.service';
 import { CreateAchatDto } from './dto/create-achat.dto';
 import { UpdateAchatDto } from './dto/update-achat.dto';
@@ -10,13 +18,15 @@ export class AchatController {
 
   @Post()
   async create(@Body() createAchatDto: CreateAchatDto) {
-    const ini = "100AAA000";
-    const lastAchat = await this.achatService.findLastByUserId(createAchatDto.userId);
-    if(lastAchat){
+    const ini = '100AAA000';
+    const lastAchat = await this.achatService.findLastByUserId(
+      createAchatDto.userId,
+    );
+    if (lastAchat) {
       createAchatDto.ref = InvoiceNumber.next(lastAchat.ref);
     } else {
       createAchatDto.ref = ini;
-    } 
+    }
     return this.achatService.create(createAchatDto);
   }
 

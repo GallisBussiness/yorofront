@@ -1,6 +1,4 @@
-import {
-  Module,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ParamModule } from './param/param.module';
@@ -37,9 +35,8 @@ import { PaiementDetteFournisseurModule } from './paiement-dette-fournisseur/pai
         autoCreate: true,
       }),
       inject: [ConfigService],
-      
     }),
-    AuthModule.forRoot({auth,isGlobal:true}),
+    AuthModule.forRoot({ auth, isGlobal: true }),
     ParamModule,
     ClientModule,
     FournisseurModule,
@@ -59,7 +56,7 @@ import { PaiementDetteFournisseurModule } from './paiement-dette-fournisseur/pai
     PaymentModule,
     DetteFournisseurModule,
     VentecaisseModule,
-    PaiementDetteFournisseurModule
+    PaiementDetteFournisseurModule,
   ],
   controllers: [],
   providers: [

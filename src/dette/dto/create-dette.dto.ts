@@ -1,11 +1,11 @@
-import { IsDate, IsNumber, IsMongoId, IsString } from "class-validator";
+import { IsDate, IsNumber, IsMongoId, IsString } from 'class-validator';
 export class CreateDetteDto {
-    @IsNumber()
-    montant:number;
+  @IsNumber()
+  montant: number;
 
-    @IsString()
-    date:string;
+  @IsString()
+  date: string;
 
-    @IsMongoId()
-    client:string;
+  @IsMongoId()
+  client: string;
 }

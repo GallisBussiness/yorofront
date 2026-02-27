@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -12,7 +20,6 @@ export class ArticleController {
     return this.articleService.create(createArticleDto);
   }
 
-
   @Get('user/:userId')
   findByUser(@Param('userId') userId: string) {
     return this.articleService.findByUserId(userId);
@@ -25,7 +32,7 @@ export class ArticleController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return  this.articleService.findOne(id);
+    return this.articleService.findOne(id);
   }
 
   @Patch(':id')

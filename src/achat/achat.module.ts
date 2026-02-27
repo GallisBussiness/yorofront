@@ -19,6 +19,6 @@ import { Achat, AchatSchema } from './entities/achat.entity';
   ],
   controllers: [AchatController],
   providers: [AchatService],
-  exports:[AchatService]
+  exports: [AchatService],
 })
 export class AchatModule {}

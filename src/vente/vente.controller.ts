@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { VenteService } from './vente.service';
 import { CreateVenteDto } from './dto/create-vente.dto';
 import { UpdateVenteDto } from './dto/update-vente.dto';
@@ -10,13 +18,15 @@ export class VenteController {
 
   @Post()
   async create(@Body() createVenteDto: CreateVenteDto) {
-    const ini = "100VVV000";
-    const lastVente = await this.venteService.findLastByUserId(createVenteDto.userId);
-    if(lastVente){
+    const ini = '100VVV000';
+    const lastVente = await this.venteService.findLastByUserId(
+      createVenteDto.userId,
+    );
+    if (lastVente) {
       createVenteDto.ref = InvoiceNumber.next(lastVente.ref);
     } else {
       createVenteDto.ref = ini;
-    } 
+    }
     return this.venteService.create(createVenteDto);
   }
 

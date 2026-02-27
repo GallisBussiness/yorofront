@@ -1,15 +1,15 @@
-import { IsDate, IsNumber, IsObject, IsString } from "class-validator";
+import { IsDate, IsNumber, IsObject, IsString } from 'class-validator';
 
 export class CreateJournalDto {
-    @IsDate()
-    date:Date;
-    
-    @IsString()
-    method:string;
+  @IsDate()
+  date: Date;
 
-    @IsString()
-    url:string;
+  @IsString()
+  method: string;
 
-    @IsNumber()
-    status:number;
+  @IsString()
+  url: string;
+
+  @IsNumber()
+  status: number;
 }

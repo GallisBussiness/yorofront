@@ -19,6 +19,6 @@ import { Vente, VenteSchema } from './entities/vente.entity';
   ],
   controllers: [VenteController],
   providers: [VenteService],
-  exports:[VenteService]
+  exports: [VenteService],
 })
 export class VenteModule {}

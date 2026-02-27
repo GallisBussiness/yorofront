@@ -8,11 +8,11 @@ export class AppInitService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    console.log('Initialisation des données de l\'application...');
-    
+    console.log("Initialisation des données de l'application...");
+
     // Initialiser les packs d'abonnement
     await this.subscriptionPacksSeedService.seed();
-    
+
     console.log('Initialisation terminée avec succès');
   }
 }

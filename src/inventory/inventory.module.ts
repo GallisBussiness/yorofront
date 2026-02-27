@@ -6,7 +6,7 @@ import { VenteModule } from 'src/vente/vente.module';
 import { ArticleModule } from 'src/article/article.module';
 
 @Module({
-  imports:[AchatModule,VenteModule,ArticleModule],
+  imports: [AchatModule, VenteModule, ArticleModule],
   controllers: [InventoryController],
   providers: [InventoryService],
 })

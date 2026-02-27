@@ -1,24 +1,24 @@
-import { IsMongoId, IsNumber, IsString } from "class-validator";
+import { IsMongoId, IsNumber, IsString } from 'class-validator';
 
 export class CreateArticleDto {
-    @IsString()
-    ref: string;
+  @IsString()
+  ref: string;
 
-    @IsString()
-    nom: string;
+  @IsString()
+  nom: string;
 
-    @IsNumber()
-    stock_seuil: number;
+  @IsNumber()
+  stock_seuil: number;
 
-    @IsMongoId()
-    famille: string;
+  @IsMongoId()
+  famille: string;
 
-    @IsNumber()
-    prix:number;
+  @IsNumber()
+  prix: number;
 
-    @IsMongoId()
-    unite: string;
-    
-    @IsMongoId()
-    userId: string;
+  @IsMongoId()
+  unite: string;
+
+  @IsMongoId()
+  userId: string;
 }

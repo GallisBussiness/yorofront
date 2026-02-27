@@ -17,7 +17,12 @@ async function bootstrap() {
     origin: process.env.APP_URL || 'http://localhost:3000',
     credentials: true, // CRUCIAL pour les cookies Better Auth
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'X-Requested-With'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Cookie',
+      'X-Requested-With',
+    ],
     exposedHeaders: ['Set-Cookie'],
   });
   const uploadsPath = join(process.cwd(), 'uploads');
@@ -25,14 +30,19 @@ async function bootstrap() {
     prefix: '/uploads/',
     setHeaders: (res, path, stat) => {
       res.set('Access-Control-Allow-Origin', process.env.APP_URL);
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization,Credentials");
-    }
+      res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept,Authorization,Credentials',
+      );
+    },
   });
-  
+
   // Configuration Helmet pour permettre les cookies
-  app.use(helmet({
-    crossOriginResourcePolicy: { policy: 'cross-origin' },
-  }));
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+    }),
+  );
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -45,13 +55,13 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   const config = app.get(ConfigService);
   const conf = new DocumentBuilder()
-  .setTitle('SASS COMMERCIAL')
-  .setDescription('SASS COM API')
-  .setVersion('1.0')
-  .addTag('com')
-  .build();
-const document = SwaggerModule.createDocument(app, conf);
-SwaggerModule.setup('api', app, document);
+    .setTitle('SASS COMMERCIAL')
+    .setDescription('SASS COM API')
+    .setVersion('1.0')
+    .addTag('com')
+    .build();
+  const document = SwaggerModule.createDocument(app, conf);
+  SwaggerModule.setup('api', app, document);
   const port = parseInt(config.get('NEST_PORT'), 10) || process.env.PORT;
   await app.listen(port, () => logger.log(`App started at port: ${port}`));
 }

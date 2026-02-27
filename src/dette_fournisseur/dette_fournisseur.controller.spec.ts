@@ -11,7 +11,9 @@ describe('DetteFournisseurController', () => {
       providers: [DetteFournisseurService],
     }).compile();
 
-    controller = module.get<DetteFournisseurController>(DetteFournisseurController);
+    controller = module.get<DetteFournisseurController>(
+      DetteFournisseurController,
+    );
   });
 
   it('should be defined', () => {

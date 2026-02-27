@@ -5,9 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Dette, DetteSchema } from './entities/dette.entity';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Dette.name, schema: DetteSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: Dette.name, schema: DetteSchema }]),
+  ],
   controllers: [DetteController],
   providers: [DetteService],
-  exports: [DetteService]
+  exports: [DetteService],
 })
 export class DetteModule {}

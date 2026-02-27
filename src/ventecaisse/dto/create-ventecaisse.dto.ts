@@ -1,9 +1,9 @@
-import { IsDateString, IsNumber } from "class-validator";
+import { IsDateString, IsNumber } from 'class-validator';
 
 export class CreateVentecaisseDto {
-    @IsNumber()
-    montant:number;
+  @IsNumber()
+  montant: number;
 
-    @IsDateString()
-    date:string;
+  @IsDateString()
+  date: string;
 }

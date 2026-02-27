@@ -1,15 +1,15 @@
-import { IsDate, IsMongoId, IsNumber } from "class-validator";
+import { IsDate, IsMongoId, IsNumber } from 'class-validator';
 
 export class CreateFactureAchatDto {
-    @IsDate()
-    date: string;
+  @IsDate()
+  date: string;
 
-    @IsMongoId()
-    client: string;
+  @IsMongoId()
+  client: string;
 
-    @IsNumber()
-    montant: number;
+  @IsNumber()
+  montant: number;
 
-    @IsMongoId()
-    user:string;
+  @IsMongoId()
+  user: string;
 }

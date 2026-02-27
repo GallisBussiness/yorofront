@@ -1,8 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Req,
+} from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
-import { Session, UserSession,Public} from '@thallesp/nestjs-better-auth';
+import { Session, UserSession, Public } from '@thallesp/nestjs-better-auth';
 import { createHash } from 'crypto';
 import { ConfigService } from '@nestjs/config';
 
@@ -14,51 +23,59 @@ function SHA256Encrypt(password) {
 
 @Controller('payment')
 export class PaymentController {
-  constructor(private readonly paymentService: PaymentService,
+  constructor(
+    private readonly paymentService: PaymentService,
     private readonly config: ConfigService,
   ) {}
 
   @Post()
-  async create(@Body() createPaymentDto: CreatePaymentDto,@Session() session: UserSession) {
+  async create(
+    @Body() createPaymentDto: CreatePaymentDto,
+    @Session() session: UserSession,
+  ) {
     // Si l'utilisateur n'est pas spécifié, utiliser l'utilisateur connecté
     if (!createPaymentDto.user && session.user) {
       createPaymentDto.user = session.user.id;
     }
-    const payment = await this.paymentService.create({...createPaymentDto,statut:'en_attente'});
-    let paymentRequestUrl = "https://paytech.sn/api/payment/request-payment";// http client
+    const payment = await this.paymentService.create({
+      ...createPaymentDto,
+      statut: 'en_attente',
+    });
+    let paymentRequestUrl = 'https://paytech.sn/api/payment/request-payment'; // http client
     let params = {
-    item_name:"Abonnement Gestion Commercial" + payment.type_abonnement,
-    item_price:payment.montant,
-    currency:"XOF",
-    ref_command:payment._id,
-    command_name:"Paiement gestion commercial pour " + payment.montant + " XOF",
-    env:"prod",
-    success_url:this.config.get('APP_URL') + "/success",
-    cancel_url:this.config.get('APP_URL') + "/cancel",
-    ipn_url:this.config.get('BACKEND_URL') + "/payment/ipn"
+      item_name: 'Abonnement Gestion Commercial' + payment.type_abonnement,
+      item_price: payment.montant,
+      currency: 'XOF',
+      ref_command: payment._id,
+      command_name:
+        'Paiement gestion commercial pour ' + payment.montant + ' XOF',
+      env: 'prod',
+      success_url: this.config.get('APP_URL') + '/success',
+      cancel_url: this.config.get('APP_URL') + '/cancel',
+      ipn_url: this.config.get('BACKEND_URL') + '/payment/ipn',
     };
 
     let headers = {
-    Accept: "application/json",
-    'Content-Type': "application/json",
-    API_KEY: this.config.get('API_KEY_PAYTECH'),
-    API_SECRET: this.config.get('API_SECRET_PAYTECH'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      API_KEY: this.config.get('API_KEY_PAYTECH'),
+      API_SECRET: this.config.get('API_SECRET_PAYTECH'),
     };
 
-
     return fetch(paymentRequestUrl, {
-      method:'POST',
-      body:JSON.stringify(params),
-      headers: headers
-      })
+      method: 'POST',
+      body: JSON.stringify(params),
+      headers: headers,
+    })
       .then(function (response) {
-      return response.json()
+        return response.json();
       })
       .then(function (jsonResponse) {
-      return jsonResponse;
-      }).catch((error) => {
-        console.log(error)
+        return jsonResponse;
       })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   @Post('ipn')
@@ -72,17 +89,20 @@ export class PaymentController {
     let my_api_key = this.config.get('API_KEY_PAYTECH');
     let my_api_secret = this.config.get('API_SECRET_PAYTECH');
 
-    if(SHA256Encrypt(my_api_secret) === api_secret_sha256 && SHA256Encrypt(my_api_key) === api_key_sha256)
-    {
-      if(type_event === 'sale_complete'){
-        await this.paymentService.update(ref_command,{statut:'valide',methode_paiement:payment_method})
-      }
-      else {
+    if (
+      SHA256Encrypt(my_api_secret) === api_secret_sha256 &&
+      SHA256Encrypt(my_api_key) === api_key_sha256
+    ) {
+      if (type_event === 'sale_complete') {
+        await this.paymentService.update(ref_command, {
+          statut: 'valide',
+          methode_paiement: payment_method,
+        });
+      } else {
         await this.paymentService.remove(ref_command);
       }
-    }
-    else{
-      console.log("from someone else");
+    } else {
+      console.log('from someone else');
     }
   }
 
@@ -95,12 +115,12 @@ export class PaymentController {
   findOne(@Param('id') id: string) {
     return this.paymentService.findOne(id);
   }
-  
+
   @Get('user/:userId')
   findByUser(@Param('userId') userId: string) {
     return this.paymentService.findByUser(userId);
   }
-  
+
   @Get('subscription/active')
   verifySubscription(@Session() session: UserSession) {
     return this.paymentService.verifySubscription(session.user.id);

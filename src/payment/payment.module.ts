@@ -9,11 +9,11 @@ import { Pack, PackSchema } from 'src/pack/entities/pack.entity';
   imports: [
     MongooseModule.forFeature([
       { name: Payment.name, schema: PaymentSchema },
-      { name: Pack.name, schema: PackSchema }
-    ])
+      { name: Pack.name, schema: PackSchema },
+    ]),
   ],
   controllers: [PaymentController],
   providers: [PaymentService],
-  exports: [PaymentService]
+  exports: [PaymentService],
 })
 export class PaymentModule {}

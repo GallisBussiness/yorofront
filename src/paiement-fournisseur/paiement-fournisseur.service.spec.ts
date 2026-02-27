@@ -9,7 +9,9 @@ describe('PaiementFournisseurService', () => {
       providers: [PaiementFournisseurService],
     }).compile();
 
-    service = module.get<PaiementFournisseurService>(PaiementFournisseurService);
+    service = module.get<PaiementFournisseurService>(
+      PaiementFournisseurService,
+    );
   });
 
   it('should be defined', () => {

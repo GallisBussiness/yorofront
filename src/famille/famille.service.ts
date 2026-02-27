@@ -7,8 +7,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class FamilleService extends AbstractModel<Famille,CreateFamilleDto,UpdateFamilleDto>{
-  constructor(@InjectModel(Famille.name) private readonly familleModel: Model<FamilleDocument>){
+export class FamilleService extends AbstractModel<
+  Famille,
+  CreateFamilleDto,
+  UpdateFamilleDto
+> {
+  constructor(
+    @InjectModel(Famille.name)
+    private readonly familleModel: Model<FamilleDocument>,
+  ) {
     super(familleModel);
   }
 }

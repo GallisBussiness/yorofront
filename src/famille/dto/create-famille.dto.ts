@@ -1,9 +1,9 @@
-import { IsMongoId, IsString } from "class-validator";
+import { IsMongoId, IsString } from 'class-validator';
 
 export class CreateFamilleDto {
-    @IsString()
-    nom: string;
+  @IsString()
+  nom: string;
 
-    @IsMongoId()
-    userId: string;
+  @IsMongoId()
+  userId: string;
 }

@@ -13,23 +13,26 @@ const storage = diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = uuidv4();
-    cb(
-      null,
-      file.fieldname + '-' + uniqueSuffix + '-' + file.originalname,
-    );
+    cb(null, file.fieldname + '-' + uniqueSuffix + '-' + file.originalname);
   },
 });
 
 @Module({
-  imports: [MongooseModule.forFeatureAsync([{name: Param.name,useFactory:() => {
-    const schema =  ParamSchema;
-    schema.plugin(require('mongoose-autopopulate'));
-    return schema;
-  }}]),
-  MulterModule.register({
-    storage
-  })
-],
+  imports: [
+    MongooseModule.forFeatureAsync([
+      {
+        name: Param.name,
+        useFactory: () => {
+          const schema = ParamSchema;
+          schema.plugin(require('mongoose-autopopulate'));
+          return schema;
+        },
+      },
+    ]),
+    MulterModule.register({
+      storage,
+    }),
+  ],
   controllers: [ParamController],
   providers: [ParamService],
 })

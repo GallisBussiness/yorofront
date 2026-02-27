@@ -1,12 +1,12 @@
-import { IsMongoId, IsNumber, IsString } from "class-validator";
+import { IsMongoId, IsNumber, IsString } from 'class-validator';
 
 export class CreatePaiementDetteFournisseurDto {
-    @IsString()
-    date: string;
+  @IsString()
+  date: string;
 
-    @IsMongoId()
-    dette: string;
-    
-    @IsNumber()
-    montant: number;
+  @IsMongoId()
+  dette: string;
+
+  @IsNumber()
+  montant: number;
 }

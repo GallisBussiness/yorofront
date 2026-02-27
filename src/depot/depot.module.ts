@@ -6,10 +6,10 @@ import { Depot, DepotSchema } from './entities/depot.entity';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Depot.name, schema: DepotSchema }])
+    MongooseModule.forFeature([{ name: Depot.name, schema: DepotSchema }]),
   ],
   controllers: [DepotController],
   providers: [DepotService],
-  exports: [DepotService]
+  exports: [DepotService],
 })
 export class DepotModule {}

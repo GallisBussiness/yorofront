@@ -5,7 +5,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Unite, UniteSchema } from './entities/unite.entity';
 
 @Module({
-  imports:[MongooseModule.forFeature([{name:Unite.name,schema: UniteSchema}])],
+  imports: [
+    MongooseModule.forFeature([{ name: Unite.name, schema: UniteSchema }]),
+  ],
   controllers: [UniteController],
   providers: [UniteService],
 })

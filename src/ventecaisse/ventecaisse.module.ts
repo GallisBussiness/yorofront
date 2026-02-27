@@ -5,7 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Ventecaisse, VentecaisseSchema } from './entities/ventecaisse.entity';
 
 @Module({
-  imports:[MongooseModule.forFeature([{name:Ventecaisse.name,schema:VentecaisseSchema}])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: Ventecaisse.name, schema: VentecaisseSchema },
+    ]),
+  ],
   controllers: [VentecaisseController],
   providers: [VentecaisseService],
 })
