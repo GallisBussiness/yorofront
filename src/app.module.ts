@@ -24,6 +24,7 @@ import { auth } from 'lib/auth';
 import { APP_GUARD } from '@nestjs/core';
 import { VentecaisseModule } from './ventecaisse/ventecaisse.module';
 import { PaiementDetteFournisseurModule } from './paiement-dette-fournisseur/paiement-dette-fournisseur.module';
+import { VenteSimpleModule } from './vente-simple/vente-simple.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -57,6 +58,7 @@ import { PaiementDetteFournisseurModule } from './paiement-dette-fournisseur/pai
     DetteFournisseurModule,
     VentecaisseModule,
     PaiementDetteFournisseurModule,
+    VenteSimpleModule,
   ],
   controllers: [],
   providers: [
